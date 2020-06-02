@@ -32,10 +32,10 @@ app.use(bodyParser.urlencoded({
    extended: false
 }));
 
-var whitelist = ['http://localhost:4200']
+var whitelist = ['http://localhost:4200','https://tatclientapp.mybluemix.net']
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Untrusted source of access!!!'))
@@ -43,6 +43,17 @@ var corsOptions = {
   }
 }
 
+app.use(function(req,res, next){
+   if(req.method == "OPTIONS"){
+      res.header('Access-Control-Allow-Headers', "*");
+      res.header('Access-Control-Allow-Methods', "POST, GET, OPTIONS, PUT, PATCH, DELETE");
+      res.header('Access-Control-Allow-Origin', "*");
+      res.header('Access-Control-Allow-Credentials', true);
+      return res.sendStatus(200);
+    }
+    else
+      return next();
+});
 app.use(cors(corsOptions));
 
 app.use(express.static(path.join(__dirname, 'dist/mean-stack-crud-app')));
