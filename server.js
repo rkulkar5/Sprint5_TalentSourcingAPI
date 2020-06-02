@@ -7,9 +7,10 @@ let express = require('express'),
 
 // Connecting with mongo db
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, {
-   useNewUrlParser: true
-}).then(() => {
+
+// Connecting with mongo db
+mongoose.Promise = global.Promise;
+mongoose.connect(dbConfig.db, dbConfig.options).then(() => {
       console.log('Database sucessfully connected')
    },
    error => {
