@@ -14,17 +14,17 @@ try {
 
 const appEnvOpts = vcapLocal ? { vcapLocal } : {}
 
-console.log("*********appEnvOpts ************", appEnvOpts);
+console.log("*********appEnvOpts Sprint 5 ************", appEnvOpts);
 
 
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
-console.log("*********appEnv ************", appEnv);
+console.log("*********appEnv Sprint 5 ************", appEnv);
 
 // Within the application environment (appenv) there's a services object
 let services = vcapLocal.services;
 
-console.log("*********services ************", services);
+console.log("*********services  Sprint 5************", services);
 
 let mongodb_services = services["compose-for-mongodb"];
 
