@@ -11,16 +11,23 @@ try {
     // console.log(e)
 }
 
-const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
 
+const appEnvOpts = vcapLocal ? { vcapLocal } : {}
+
+console.log("*********appEnvOpts ************", appEnvOpts);
 
 
 const appEnv = cfenv.getAppEnv(appEnvOpts);
-console.log("*********services ************", appEnv);
+
+console.log("*********appEnv ************", appEnv);
+
 // Within the application environment (appenv) there's a services object
-let services = appEnv.services;
+let services = vcapLocal.services;
+
 console.log("*********services ************", services);
+
 let mongodb_services = services["compose-for-mongodb"];
+
 console.log("*********mongodb_services ************", mongodb_services);
 
 //console.log("********* mongodb_services ************", mongodb_services);
@@ -30,7 +37,7 @@ assert(!util.isUndefined(mongodb_services), "App must be bound to databases-for-
 // We now take the first bound MongoDB service and extract it's credentials object
 var credentials = mongodb_services[0].credentials;
 
-//console.log("********* credentials.mongodb.certificate.certificate_base64 ************", credentials.connection.mongodb.certificate.certificate_base64);
+console.log("********* credentials.mongodb.certificate.certificate_base64 ************", credentials.connection.mongodb.certificate.certificate_base64);
 
 // We always want to make a validated TLS/SSL connection
 let options = {
@@ -39,7 +46,7 @@ let options = {
 
 };
 
-//console.log("********", credentials.connection.mongodb.certificate.hasOwnProperty("certificate_base64"));
+console.log("********", credentials.connection.mongodb.certificate.hasOwnProperty("certificate_base64"));
 // If there is a certificate available, use that, otherwise assume Lets Encrypt certifications.
 if (credentials.connection.mongodb.certificate.hasOwnProperty("certificate_base64")) {
 console.log("******** INSIDE ********");
